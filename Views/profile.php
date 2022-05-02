@@ -1,23 +1,35 @@
+<?php
+// 設定関連を読み込む
+include_once('../config.php');
+// 便利な関数を読み込む
+include_once('../util.php');
+
+///////////////////////////////////////
+// ツイート一覧
+//////////////////////////////////////
+$view_tweets = [
+    [
+        'user_id' => 1,
+        'user_name' => 'taro',
+        'user_nickname' => '太郎',
+        'user_image_name' => 'sample-person.jpg',
+        'tweet_body' => '今プログラミングをしています。',
+        'tweet_image_name' => null,
+        'tweet_created_at' => '2022-04-15 14:00:00',
+        'like_id' => null,
+        'like_count' => 0,
+    ],
+];
+?>
+
+
 <!DOCTYPE html>
 <html lang="ja">
  
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="../Views/img/logo-twitterblue.svg">
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
-    <link href="../Views/css/style.css" rel="stylesheet">
-    <!-- JS -->
-    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous" defer></script>
-    <!-- JavaScript Bundle with Popper -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous" defer></script>
-    <!--いいね！<JS-->
-    <script src="../Views/js/likes.js" defer></script>
-
+    <?php include_once('../Views/common/head.php'); ?>
     <title>プロフィール画面 / Twitterクローン</title>
-    <meta name="description" content="ホーム画面です">
+    <meta name="description" content="プロフィール画面です">
 </head>
  
 <body class="home profile text-center">
@@ -107,14 +119,19 @@
             <!--仕切りエリア-->
             <div class="ditch"></div>
 
-            <!--TODO: つぶやき一覧エリア-->
+            <!--つぶやき一覧エリア-->
+        <?php if (empty($view_tweets)) : ?>
+        <p class="p-3">ツイートがありません</p>
+        <?php else : ?>
+        <div class="tweet-list">
+            <?php foreach($view_tweets as $view_tweet): ?>
+                <?php include('../Views/common/tweet.php'); ?>    
+                <?php endforeach; ?>
+            </div>
+        <?php endif; ?>
         </div>
     </div>
-    <script>
-        document.addEventListener('DOMContentLoaded', function(){
-            $('.js-popover').popover();
-        }, false);
-    </script>
+    <?php include_once('../Views/common/foot.php'); ?>
 </body>
  
 </html>
